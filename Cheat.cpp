@@ -48,28 +48,21 @@ void cCheat::readData()
 
 	uintptr_t address = 0;
 
-	if (!UWorld)
-	{
-		address = Mem->FindSignature(baseModule, baseSize,
-			(BYTE*)("\x48\x8B\x05\x00\x00\x00\x00\x48\x8B\x88\x00\x00\x00\x00\x48\x85\xC9\x74\x06\x48\x8B\x49\x70"),
-			(char*)"xxx????xxx????xxxxxxxxx");
-
-		auto uworldoffset = Mem->Read<int32_t>(address + 3);
-		UWorld = address + uworldoffset + 7;
-	}
-	if (!GNames)
-	{
-		address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x48\x8B\x1D\x00\x00\x00\x00\x48\x85\x00\x75\x3A", (char*)"xxx????xx?xx");
-		auto gnamesoffset = Mem->Read<int32_t>(address + 3);
-		GNames = Mem->Read<uintptr_t>(address + gnamesoffset + 7);
-	}
-	if (!GObjects)
-	{
-		address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x48\x8B\x15\x00\x00\x00\x00\x3B\x42\x1C", (char*)"xxx????xxx");
-		auto gobjectsoffset = Mem->Read<int32_t>(address + 3);
-		auto offset = gobjectsoffset + 7;
-		GObjects = Mem->Read<uintptr_t>(address + gobjectsoffset + 7);
-	}
+    if (!UWorld) {
+        address = Mem->FindSignature(baseModule, baseSize, (BYTE*)("\x48\x8B\x05\x00\x00\x00\x00\x48\x8B\x88\x00\x00\x00\x00\x48\x85\xC9\x74\x06\x48\x8B\x49\x70"), (char*)"xxx????xxx????xxxxxxxxx");
+        auto uworldoffset = Mem->Read<int32_t>(address + 3);
+        UWorld = address + uworldoffset + 7;
+    }
+    if (!GNames) {
+        address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x48\x8B\x1D\x00\x00\x00\x00\x48\x85\x00\x75\x3A", (char*)"xxx????xx?xx");
+        auto gnamesoffset = Mem->Read<int32_t>(address + 3);
+        GNames = Mem->Read<uintptr_t>(address + gnamesoffset + 7);
+    }
+    if (!GObjects) {
+        address = Mem->FindSignature(baseModule, baseSize, (BYTE*)"\x89\x0D\x00\x00\x00\x00\x48\x8B\xDF\x48\x89\x5C\x24", (char*)"xx????xxxxxxx");
+        auto gobjectsoffset = Mem->Read<int32_t>(address + 2);
+        GObjects = Mem->Read<uintptr_t>(address + gobjectsoffset + 6);
+    }
 
 	if (Names.empty())
 	{
@@ -585,7 +578,7 @@ void cCheat::readData()
 		else if ((name.find("BP_Pig_") != std::string::npos && Vars.ESP.Animals.bPig) || (name.find("BP_Snake_") != std::string::npos && Vars.ESP.Animals.bSnake) || (name.find("BP_Chicken_") != std::string::npos && Vars.ESP.Animals.bChicken))
 		{
 		if (!Vars.ESP.Animals.bActive)
-		continue;
+			continue;
 
 		auto pos = actor.GetRootComponent().GetPosition();
 		auto distance = SOT->localCamera.position.DistTo(pos) / 100.00f;
@@ -649,7 +642,6 @@ void cCheat::readData()
 			if (Misc->WorldToScreen(pos, &Screen))
 				DrawString(std::wstring(treasure.GetBootyItemInfo().GetItemDesc().GetName() + L" [ " + std::to_wstring((int)distance) + L"m ] ").c_str(), Screen.x, Screen.y, color, true, "default");
 		}
-
 
 	}
 

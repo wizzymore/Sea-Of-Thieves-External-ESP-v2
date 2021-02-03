@@ -1,10 +1,10 @@
 #include "config.h"
 #include "json.h"
-#include <experimental/filesystem>
+#include <filesystem>
 
 nlohmann::json json;
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 void assign_item(item &item) {
 	if (json[item.name.c_str()].empty())
@@ -46,10 +46,10 @@ void reset_item(item &item) {
 
 bool c_config::init() {
 
-	m_directory = std::experimental::filesystem::current_path().string();
+	m_directory = std::filesystem::current_path().string();
 
-	if (!std::experimental::filesystem::exists(m_directory)) {
-		if (!std::experimental::filesystem::create_directory(m_directory)) {
+	if (!std::filesystem::exists(m_directory)) {
+		if (!std::filesystem::create_directory(m_directory)) {
 			_RPT1(_CRT_WARN, "Failed to create profile directory. Ignoring this error will result in not being able to create or save profiles.\n\n%s", m_directory);
 			return false;
 		}
@@ -167,7 +167,7 @@ void c_config::remove(const std::string &file) const {
 std::vector< std::string > c_config::get_configs() const {
 	std::vector< std::string > output{ };
 
-	for (auto &file_path : std::experimental::filesystem::directory_iterator(m_directory)) {
+	for (auto &file_path : std::filesystem::directory_iterator(m_directory)) {
 		if (file_path.path().string().empty())
 			continue;
 
@@ -235,10 +235,10 @@ void c_config::export_to_clipboard(const std::string &file) const {
 
 bool c_offsets::init() {
 
-	m_directory = std::experimental::filesystem::current_path().string();
+	m_directory = std::filesystem::current_path().string();
 
-	if (!std::experimental::filesystem::exists(m_directory)) {
-		if (!std::experimental::filesystem::create_directory(m_directory)) {
+	if (!std::filesystem::exists(m_directory)) {
+		if (!std::filesystem::create_directory(m_directory)) {
 			_RPT1(_CRT_WARN, "Failed to create profile directory. Ignoring this error will result in not being able to create or save profiles.\n\n%s", m_directory);
 			return false;
 		}
@@ -360,7 +360,7 @@ void c_offsets::remove(const std::string& file) const {
 std::vector< std::string > c_offsets::get_configs() const {
 	std::vector< std::string > output{ };
 
-	for (auto& file_path : std::experimental::filesystem::directory_iterator(m_directory)) {
+	for (auto& file_path : std::filesystem::directory_iterator(m_directory)) {
 		if (file_path.path().string().empty())
 			continue;
 

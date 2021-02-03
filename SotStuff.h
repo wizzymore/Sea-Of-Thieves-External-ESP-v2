@@ -246,7 +246,7 @@ private:
 
 class Chunk
 {
-	char __pad0x0[0x1000];
+	char __pad0x0[0x2000];
 };
 
 class USceneComponent
@@ -274,7 +274,7 @@ public:
 	int GetHealth();
 	int GetMaxHealth();
 private:
-	unsigned char UnknownData00[0xD4];
+	unsigned char UnknownData00[0xE0];
 	float maxHealth;
 	float health;
 	unsigned char UnknownData01[0xC4];
@@ -346,7 +346,7 @@ private:
 	TArray<class APlayerState*> Players;
 	char __pad0x30[0x30];
 	int maxPlayersOnShip;
-	char __pad0x64[0x1C];
+	char __pad0x64[0x2C];
 };// 0x0080
 
 class ACrewService
@@ -399,7 +399,7 @@ public:
 	Vector3 GetCameraRotation();
 	float	GetCameraFOV();
 private:
-	char __pad0x0[0x490];
+	char __pad0x0[0x4b0];
 	Vector3 position;
 	Vector3 rotation;
 	char __pad0x10[0x10];
