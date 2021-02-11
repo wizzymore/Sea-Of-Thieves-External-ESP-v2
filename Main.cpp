@@ -104,17 +104,17 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	Process->myWindow= hWnd;
 
 	g_offsets.init();
-	if (!g_offsets.load("offsets"))
+	if (!g_offsets.load("offsets.cfg"))
 	{
 		MessageBoxA(NULL, "Failed To Find The Offsets File", "Please place the offsets file in the same folder as the Application", MB_OK);
 		return 1;
 	}
 
 	g_configs.init();
-	if (!g_configs.load("default"))
-		g_configs.save("default");
+	if (!g_configs.load("config.cfg"))
+		g_configs.save("config.cfg");
 
-	g_configs.save("default");
+	g_configs.save("config.cfg");
 	MSG msg;
 
 	while (TRUE)
