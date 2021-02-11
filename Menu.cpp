@@ -12,7 +12,7 @@ void cDrawing::Draw()
 {
 	Cheat->readData();
 
-	String(std::string("Credits: Ouizzy").c_str(), 10, Process->Size[1] - 20, D3DCOLOR_XRGB(0, 255, 0), false, "small");
+	String(std::string("Credits: gummy8unny, Killerbear, Ouizzy").c_str(), 10, Process->Size[1] - 20, D3DCOLOR_XRGB(0, 255, 0), false, "small");
 	//String(std::to_string(directX->frames).c_str(), 100, 100, D3DCOLOR_XRGB(0, 255, 0), false, "small");
 
 	if (Vars.GUI)
